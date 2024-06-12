@@ -6,13 +6,14 @@ const { default: mongoose } = require('mongoose')
 const { server } = require('websocket')
 const register = require('./controllers/User')
 const Login = require('./controllers/User')
+const chatRoutes = require('./routes/Chat')
 
 mongoose.connect('', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
 const app = express()
-const server = http.createServer(server)
+// const serverI = http.createServer(server)
 const io = socketIO(server)
 
 const PORT = process.env.PORT || 3001
@@ -25,6 +26,7 @@ app.use(express.urlencoded({ extended: false }))
 
 app.post('/register', register)
 app.post('/login', Login)
+app.use('/chats', chatRoutes)
 
 app.use('/', (req, res) => {
   res.send(`Connected!`)
