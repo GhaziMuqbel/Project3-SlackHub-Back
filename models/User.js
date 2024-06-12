@@ -20,6 +20,14 @@ const userSchema = new Schema(
     userType: {
       type: Boolean,
       require: true
+    },
+    courses: {
+      type: Schema.Types.ObjectId,
+      ref: 'courses'
+    },
+    coursesAdd: {
+      type: Schema.Types.ObjectId,
+      ref: 'courses'
     }
   },
   { timestamps: true }
