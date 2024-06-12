@@ -10,13 +10,9 @@ const register = async (req, res) => {
     }
     const salt = await bcrypt.genSalt(10)
     const passwordDigest = await bcrypt.hash(password, salt)
-    const newUser = new User({
-      username,
-      email,
-      passwordDigest,
-      userType
-    })
+    const newUser = new User(req.body)
     await newUser.save()
+
     const token = jwt.sign({ id: newUser._id }, 'your_jwt_secret', {
       expiresIn: '1h'
     })
