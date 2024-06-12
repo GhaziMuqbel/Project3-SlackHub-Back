@@ -6,12 +6,22 @@ const { default: mongoose } = require('mongoose')
 const http = require('http')
 const { register, login } = require('./controllers/User') // Destructure the imports
 const chatRoutes = require('./routes/Chat')
+<<<<<<< HEAD
 // mongoose.connect('', {
 //   useNewUrlParser: true,
 //   useUnifiedTopology: true
 // });
 const app = express()
 const server = http.createServer(app)
+=======
+
+mongoose.connect('', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+
+// const serverI = http.createServer(server)
+>>>>>>> 9516cc7 (Almost Done with the add course function)
 const io = socketIO(server)
 const PORT = process.env.PORT || 3001
 app.use(cors())

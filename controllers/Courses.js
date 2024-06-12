@@ -12,7 +12,7 @@ const addCourse = async (req, res) => {
       'this is the error in the add course function in the Courses.JS controller file  ' +
         err
     )
-  
   }*/
 }
-module.exports = { addcourse }
+
+module.exports = { addCourse }
