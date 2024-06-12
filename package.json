@@ -4,7 +4,7 @@
   "description": "In this lesson, we'll learn to to integrate authentication into our Express server.",
   "main": "server.js",
   "scripts": {
-    "dev": "nodemon --watch server.js"
+    "dev": "node --watch server.js"
   },
   "author": "Blazer team",
   "license": "MIT",
