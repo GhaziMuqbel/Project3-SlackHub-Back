@@ -18,13 +18,12 @@ const userSchema = new Schema(
       required: true
     },
     userType: {
-      type: DataTypes.ENUM('student', 'instructor'),
+      type: Boolean,
       require: true
     }
   },
   { timestamps: true }
 )
-
 
 const User = mongoose.model('User', userSchema)
 
