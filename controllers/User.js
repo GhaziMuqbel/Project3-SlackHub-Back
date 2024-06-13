@@ -44,4 +44,4 @@ const login = async (req, res) => {
     res.status(401).send({ status: 'Error', msg: 'An error has occurred!' })
   }
 }
-module.exports = { register, login }
+module.exports = { register, login };
