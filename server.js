@@ -7,6 +7,7 @@ const { register, login } = require("./controllers/User")
 const chatRoutes = require("./routes/Chat")
 const courseRoutes = require("./routes/courses")
 const assignmentRoutes = require("./routes/Assignments")
+const authRoutes = require("./routes/AuthRouter")
 
 const db = require("./db")
 
@@ -30,6 +31,7 @@ app.post("/login", login)
 app.use("/chats", chatRoutes)
 app.use("/course", courseRoutes)
 app.use("/assignment", assignmentRoutes)
+app.use("/auth", authRoutes)
 app.use("/", (req, res) => {
   res.send("Connected!")
 })
