@@ -10,14 +10,10 @@ const register = async (req, res) => {
     }
     const salt = await bcrypt.genSalt(10)
     const passwordDigest = await bcrypt.hash(password, salt)
-    const newUser = new User({
-      username,
-      email,
-      passwordDigest,
-      userType
-    })
+    const newUser = new User(req.body)
     await newUser.save()
-    const token = jwt.sign({ id: newUser._id }, 'your_jwt_secret', {
+
+    const token = jwt.sign({ id: newUser._id }, APP, {
       expiresIn: '1h'
     })
     res.status(200).json({ token, user: newUser })
@@ -39,7 +35,7 @@ const login = async (req, res) => {
         id: user._id,
         email: user.email
       }
-      const token = jwt.sign(payload, 'your_jwt_secret', { expiresIn: '1h' })
+      const token = jwt.sign(payload, APP, { expiresIn: '1h' })
       return res.send({ user: payload, token })
     }
     res.status(401).send({ status: 'Error', msg: 'Unauthorized' })

@@ -10,16 +10,20 @@ const courseSchema = new Schema({
     type: String,
     required: true
   },
-  Student: [
+  Students: [
     {
       type: Schema.Types.ObjectID,
       ref: 'Student'
     }
   ],
-  Instructors: [
+  Instructor: {
+    type: Schema.Types.ObjectID,
+    ref: 'Student'
+  },
+  Assignments: [
     {
       type: Schema.Types.ObjectID,
-      ref: 'Student'
+      ref: 'assignmwnt'
     }
   ]
 })

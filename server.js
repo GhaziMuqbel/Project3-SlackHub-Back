@@ -1,13 +1,14 @@
-const express = require('express')
-const logger = require('morgan')
-const cors = require('cors')
-const socketIO = require('socket.io')
-const http = require('http')
-const { register, login } = require('./controllers/User') // Destructure the imports
-const chatRoutes = require('./routes/Chat')
-const courseRoutes = require('./routes/courses')
+const express = require("express")
+const logger = require("morgan")
+const cors = require("cors")
+const socketIO = require("socket.io")
+const http = require("http")
+const { register, login } = require("./controllers/User") 
+const chatRoutes = require("./routes/Chat")
+const courseRoutes = require("./routes/courses")
+const assignmentRoutes = require("./routes/Assignments")
 
-const db = require('./db')
+const db = require("./db")
 
 // mongoose.connect('', {
 //   useNewUrlParser: true,
@@ -21,15 +22,16 @@ const server = http.createServer(app)
 const io = socketIO(server)
 const PORT = process.env.PORT || 3001
 app.use(cors())
-app.use(logger('dev'))
+app.use(logger("dev"))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.post('/register', register)
-app.post('/login', login)
-app.use('/chats', chatRoutes)
-app.use('/course', courseRoutes)
-app.use('/', (req, res) => {
-  res.send('Connected!')
+app.post("/register", register)
+app.post("/login", login)
+app.use("/chats", chatRoutes)
+app.use("/course", courseRoutes)
+app.use("/assignment", assignmentRoutes)
+app.use("/", (req, res) => {
+  res.send("Connected!")
 })
 server.listen(PORT, () => {
   console.log(`Running Express server on Port ${PORT} . . .`)
