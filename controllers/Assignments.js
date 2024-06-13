@@ -7,7 +7,15 @@ const create = async (req, res) => {
     console.log('creat an assignment' + req.body)
     const assignment = new Assignment(req.body)
     await assignment.save()
-
+    if (req.file) {
+      const image = new Image({
+        filename: req.file.originalname,
+        contentType: req.file.mimetype,
+        data: req.file.buffer
+      })
+      const savedImage = await image.save()
+      appartment.image = savedImage._id
+    }
     const updateCourse = await Courses.findById(CourseID)
     updateCourse.Assignments.push(assignment._id)
     updateCourse.save()
