@@ -14,7 +14,7 @@ const createChat = async (req, res) => {
 
 const message = async (req, res) => {
   try {
-    const { message, userId } = req.body
+    const { message, userId } = req.body.res
     const chat = await Chat.findById(req.params.id)
 
     if (!chat) {
