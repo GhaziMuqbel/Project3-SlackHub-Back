@@ -1,20 +1,22 @@
 const Assignment = require('../models/Assignment')
 const Courses = require('../models/Course')
+const Assignfile = require('../models/UploadAssigment')
 
 const create = async (req, res) => {
+  console.log(req.body)
   const CourseID = req.body.crId
   try {
     console.log('creat an assignment' + req.body)
-    const assignment = new Assignment(req.body)
-    await assignment.save()
+    const newassignment = new Assignment(req.body)
     if (req.file) {
-      const image = new Image({
+      const assignment = new Assignfile({
         filename: req.file.originalname,
         contentType: req.file.mimetype,
         data: req.file.buffer
       })
-      const savedImage = await image.save()
-      appartment.image = savedImage._id
+      const savedassignment = await assignment.save()
+      newassigment.assignmentfiles.push(savedassignment._id)
+      await newassignment.save()
     }
     const updateCourse = await Courses.findById(CourseID)
     updateCourse.Assignments.push(assignment._id)

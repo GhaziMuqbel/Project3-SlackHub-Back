@@ -15,6 +15,7 @@ const assignmentSchema = new Schema(
     description: String,
 
     submission: [submissiontSchema],
+     assignmentfiles: [{type: Schema.Types.ObjectId, ref: "assignment"}]
   },
   { timestamps: true }
 )

@@ -2,7 +2,7 @@ const express = require("express")
 const router = express.Router()
 const assignmentsController = require("../controllers/Assignments")
 const UploadAssigment = require("../controllers/Assignments")
-
+const multer = require('multer')
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
 })
 const upload = multer({ storage: storage })
 
-router.post("/", assignmentsController.create)
+router.post("/", upload.single('file'), assignmentsController.create)
 // router.put("/edit/:id", assignmentsController.edit)
 
 router.post("/edit/:id", assignmentsController.upload)
@@ -22,6 +22,6 @@ router.post("/edit/:id", assignmentsController.upload)
 router.delete("/:id", assignmentsController.delete)
 
 router.get("/:id", assignmentsController.download)
-router.post('/' , UploadAssigment.upload)
+
 
 module.exports = router
