@@ -23,7 +23,7 @@ const corsOptions = {
 app.use(cors(corsOptions))
 app.use(logger('dev'))
 app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
+//app.use(express.urlencoded({ extended: false }))
 app.use('/register', register)
 app.use('/login', login)
 app.use('/chats', chatRoutes)
@@ -34,10 +34,10 @@ app.use('/', (req, res) => {
 })
 
 // Create an HTTP server
-const server = http.createServer(app)
+const httpServer = http.createServer(app)
 
 // Create a Socket.IO server
-const io = new Server(server, {
+const io = new Server(httpServer, {
   cors: {
     origin: ['http://localhost:5501', 'http://127.0.0.1:5501'], // Allow both origins
     methods: ['GET', 'POST'],
@@ -68,7 +68,9 @@ io.on('connection', (socket) => {
     delete users[socket.id]
   })
 })
-
-server.listen(PORT, () => {
-  console.log(`Running Express server on Port ${PORT} . . .`)
+httpServer.listen(4000, () => {
+  console.log('Socket.IO server is running on port 4000');
+});
+app.listen(PORT, () => {
+ console.log(`Running Express server on Port ${PORT} . . .`)
 })
