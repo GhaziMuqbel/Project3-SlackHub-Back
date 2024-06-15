@@ -1,6 +1,25 @@
 const Chat = require('../models/Chat')
 const User = require('../models/User')
 
+const getName = async(req, res)=>{
+  const email = req.body.email
+  console.log(typeof email)
+  try{
+    const r = await User.findOne({email: email})
+    const name = r.username
+    const secretPass  = r.secret
+    console.log(r.username)
+    res.send({
+      "name": r.username,
+      "secretPass":r.secret 
+    })
+  }
+  catch(err){
+    console.error(err)
+  }
+}
+
+/*
 const createChat = async (req, res) => {
   try {
     const { users } = req.body
@@ -51,10 +70,12 @@ const deleteChatById = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message })
   }
-}
+}*/
+
 module.exports = {
-  createChat,
-  message,
-  getAllChats,
-  deleteChatById
+  // createChat,
+  // message,
+  // getAllChats,
+  // deleteChatById
+  getName
 }

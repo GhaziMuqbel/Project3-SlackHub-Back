@@ -27,5 +27,5 @@ const download = (req, res) => {
 
 module.exports = {
   upload,
-  download,
+  download
 }

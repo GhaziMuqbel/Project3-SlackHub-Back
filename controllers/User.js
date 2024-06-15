@@ -1,6 +1,7 @@
 const User = require('../models/User')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const axios = require('axios')
 const register = async (req, res) => {
   const { username, email, password, userType } = req.body
   try {
@@ -8,10 +9,12 @@ const register = async (req, res) => {
     if (existingUser) {
       return res.status(400).json({ message: 'User already exists' })
     }
-    const salt = await bcrypt.genSalt(10)
-    const passwordDigest = await bcrypt.hash(password, salt)
     const newUser = new User(req.body)
     await newUser.save()
+
+    const chatacc = await axios.put('https://api.chatengine.io/users/',{username: username, secret: username},{headers:{"private-key": process.env.CHAT_APP}})
+
+    console.log(chatacc)
 
     const token = jwt.sign({ id: newUser._id }, APP, {
       expiresIn: '1h'

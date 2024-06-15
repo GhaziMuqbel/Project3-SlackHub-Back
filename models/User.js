@@ -19,7 +19,7 @@ const userSchema = new Schema(
     },
     userType: {
       type: Boolean,
-      require: true,
+     
     },
     courses: [
       {
@@ -31,6 +31,9 @@ const userSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "courses",
     },
+    secret:{
+      type: String
+    }
   },
   { timestamps: true }
 )
