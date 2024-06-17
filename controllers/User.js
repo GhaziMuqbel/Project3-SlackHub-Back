@@ -46,5 +46,14 @@ const login = async (req, res) => {
     console.log(error)
     res.status(401).send({ status: 'Error', msg: 'An error has occurred!' })
   }
+  
 }
-module.exports = { register, login }
+const getUsers = async (req, res) => {
+  try {
+    const users = await User.find({}, 'username'); // Fetch usernames only
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+module.exports = { register, login, getUsers }

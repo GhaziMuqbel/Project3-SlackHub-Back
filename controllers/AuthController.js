@@ -47,14 +47,8 @@ const Register = async (req, res) => {
         passwordDigest,
         userType,
       })
-      console.log("user created")
-      const chatacc = await axios.put('https://api.chatengine.io/users/',{username: username, secret: username},{headers:{"private-key": process.env.CHAT_APP}})
-
-    console.log(chatacc.data.secret)
-    user.secret= chatacc.data.secret
 
     await user.save()
-    console.log("user created")
       res.send(user)
     }
   } catch (error) {
