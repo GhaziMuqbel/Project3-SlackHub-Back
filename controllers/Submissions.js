@@ -1,15 +1,15 @@
-const Assignment = require("../models/Assignment")
+const Assignment = require('../models/Assignment')
 
 const upload = async (req, res) => {
   try {
     const assignment = await Assignment.findById(req.params.id)
     if (!assignment) {
-      return res.status(404).send("Assignment not found")
+      return res.status(404).send('Assignment not found')
     }
 
     const submission = {
       studentName: req.body.studentName,
-      filePath: req.file.path,
+      code: req.body.code
     }
 
     assignment.submissions.push(submission)
@@ -21,11 +21,11 @@ const upload = async (req, res) => {
 }
 
 const download = (req, res) => {
-  const filePath = path.join(__dirname, "../uploads", req.params.fileName)
+  const filePath = path.join(__dirname, '../uploads', req.params.fileName)
   res.download(filePath)
 }
 
 module.exports = {
   upload,
-  download,
+  download
 }

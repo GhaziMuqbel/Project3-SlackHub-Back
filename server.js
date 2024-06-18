@@ -2,7 +2,7 @@ const express = require('express')
 const logger = require('morgan')
 const cors = require('cors')
 const { register, login } = require('./controllers/User') // Destructure the imports
-const chatRoutes = require('./routes/Chat')
+const reviewRoutes = require('./routes/review')
 const courseRoutes = require('./routes/courses')
 const assignmentRoutes = require('./routes/Assignments')
 const db = require('./db')
@@ -19,7 +19,7 @@ const corsOptions = {
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type'],
   credentials: true
-};
+}
 app.use(cors(corsOptions))
 app.use(logger('dev'))
 app.use(express.json())
@@ -43,7 +43,7 @@ const io = new Server(httpServer, {
     methods: ['GET', 'POST'],
     credentials: true
   }
-});
+})
 // Users dictionary to keep track of connected users
 const users = {}
 io.on('connection', (socket) => {
@@ -69,8 +69,8 @@ io.on('connection', (socket) => {
   })
 })
 httpServer.listen(4000, () => {
-  console.log('Socket.IO server is running on port 4000');
-});
+  console.log('Socket.IO server is running on port 4000')
+})
 app.listen(PORT, () => {
- console.log(`Running Express server on Port ${PORT} . . .`)
+  console.log(`Running Express server on Port ${PORT} . . .`)
 })

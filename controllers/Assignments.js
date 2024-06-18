@@ -1,26 +1,27 @@
 const Assignment = require('../models/Assignment')
 const Courses = require('../models/Course')
+const Assignfile = require('../models/UploadAssignment')
 
 const create = async (req, res) => {
-  const CourseID = req.body.crId
+  const { title, description, code, crId } = req.body
   try {
-    console.log('creat an assignment' + req.body)
-    const assignment = new Assignment(req.body)
-    await assignment.save()
+    const newAssignment = new Assignment({ title, description, code })
     if (req.file) {
-      const image = new Image({
+      const assignmentFile = new Assignfile({
         filename: req.file.originalname,
         contentType: req.file.mimetype,
         data: req.file.buffer
       })
-      const savedImage = await image.save()
-      appartment.image = savedImage._id
+      const savedAssignmentFile = await assignmentFile.save()
+      newAssignment.assignmentFiles.push(savedAssignmentFile._id)
     }
-    const updateCourse = await Courses.findById(CourseID)
-    updateCourse.Assignments.push(assignment._id)
-    updateCourse.save()
+    await newAssignment.save()
 
-    res.status(201).send(assignment)
+    const updateCourse = await Courses.findById(crId)
+    updateCourse.Assignments.push(newAssignment._id)
+    await updateCourse.save()
+
+    res.status(201).send(newAssignment)
   } catch (error) {
     res.status(400).send(error)
   }
@@ -29,8 +30,9 @@ const create = async (req, res) => {
 const deleteAssignment = async (req, res) => {
   try {
     await Assignment.findByIdAndDelete(req.params.id)
+    res.status(200).send({ message: 'Assignment deleted successfully' })
   } catch (error) {
-    console.error(error)
+    res.status(400).send(error)
   }
 }
 
@@ -43,7 +45,7 @@ const upload = async (req, res) => {
 
     const submission = {
       studentName: req.body.studentName,
-      filePath: req.file.path
+      code: req.body.code
     }
 
     assignment.submissions.push(submission)
