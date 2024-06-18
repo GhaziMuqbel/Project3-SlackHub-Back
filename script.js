@@ -1,4 +1,4 @@
-const socket = io('http://localhost:3001') // Ensure this URL matches your server's URL and port
+const socket = io('http://localhost:4000') // Ensure this URL matches your server's URL and port
 const messageContainer = document.getElementById('message-container')
 const messageForm = document.getElementById('send-container')
 const messageInput = document.getElementById('message-input')
