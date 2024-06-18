@@ -1,27 +1,29 @@
 const Assignment = require('../models/Assignment')
 const Courses = require('../models/Course')
-const Assignfile = require('../models/UploadAssignment')
+const uploadAssignment = require('../models/UploadAssigment')
 
 const create = async (req, res) => {
-  const { title, description, code, crId } = req.body
+  const CourseID = req.params.courseId
   try {
-    const newAssignment = new Assignment({ title, description, code })
+    console.log('creat an assignment' + req.body)
+    const assignment = new Assignment(req.body)
+    assignment.course = req.params.courseId
     if (req.file) {
-      const assignmentFile = new Assignfile({
+      const assign = new uploadAssignment({
         filename: req.file.originalname,
         contentType: req.file.mimetype,
         data: req.file.buffer
       })
-      const savedAssignmentFile = await assignmentFile.save()
-      newAssignment.assignmentFiles.push(savedAssignmentFile._id)
+      const savedAssign = await assign.save()
+      assignment.assignfile = savedAssign._id
     }
-    await newAssignment.save()
+    await assignment.save()
+    res.send(assignment)
+    const updateCourse = await Courses.findById(CourseID)
+    updateCourse.Assignments.push(assignment._id)
+    updateCourse.save()
 
-    const updateCourse = await Courses.findById(crId)
-    updateCourse.Assignments.push(newAssignment._id)
-    await updateCourse.save()
-
-    res.status(201).send(newAssignment)
+    res.status(201).send(assignment)
   } catch (error) {
     res.status(400).send(error)
   }

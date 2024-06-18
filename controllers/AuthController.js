@@ -1,5 +1,6 @@
 const User = require("../models/User")
 const middleware = require("../middleware")
+const axios = require('axios')
 
 const Login = async (req, res) => {
   try {
@@ -27,9 +28,10 @@ const Login = async (req, res) => {
 }
 
 const Register = async (req, res) => {
+  console.log("register function")
   try {
     const { username, email, password, userType } = req.body
-    console.log(req.body)
+    
 
     let passwordDigest = await middleware.hashPassword(password)
 
@@ -39,12 +41,14 @@ const Register = async (req, res) => {
         .status(400)
         .send("A user with that email has already been registered!")
     } else {
-      const user = await User.create({
+      const user = new User({
         username,
         email,
         passwordDigest,
         userType,
       })
+
+    await user.save()
       res.send(user)
     }
   } catch (error) {
