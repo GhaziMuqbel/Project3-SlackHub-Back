@@ -32,8 +32,9 @@ const create = async (req, res) => {
 const deleteAssignment = async (req, res) => {
   try {
     await Assignment.findByIdAndDelete(req.params.id)
+    res.status(200).send({ message: 'Assignment deleted successfully' })
   } catch (error) {
-    console.error(error)
+    res.status(400).send(error)
   }
 }
 
@@ -46,7 +47,7 @@ const upload = async (req, res) => {
 
     const submission = {
       studentName: req.body.studentName,
-      filePath: req.file.path
+      code: req.body.code
     }
 
     assignment.submissions.push(submission)

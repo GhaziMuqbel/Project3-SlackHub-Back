@@ -1,13 +1,14 @@
-const mongoose = require("mongoose")
-const Schema = mongoose.Schema
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-const submissiontSchema = new Schema(
+const submissionSchema = new Schema(
   {
     studentName: { type: Schema.Types.ObjectId, ref: "User" },
-    submittedDate: String,
+    code: String,
+    submittedDate: { type: Date, default: Date.now }
   },
   { timestamps: true }
-)
+);
 
 const assignmentSchema = new Schema(
   {
@@ -31,8 +32,8 @@ const assignmentSchema = new Schema(
     }
   },
   { timestamps: true }
-)
+);
 
-const Assignment = mongoose.model("Assignment", assignmentSchema)
+const Assignment = mongoose.model("Assignment", assignmentSchema);
 
-module.exports = Assignment
+module.exports = Assignment;
