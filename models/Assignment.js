@@ -16,7 +16,7 @@ const assignmentSchema = new Schema(
     description: String,
 
 
-    submission: [submissiontSchema],
+    submission: [submissionSchema],
 
     assignfile:{
       type: Schema.Types.ObjectId,

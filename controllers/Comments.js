@@ -1,9 +1,17 @@
 const Comments = require('../models/Comment')
+const Discussion = require('../models/Discussion')
+
 
 const addComment = async(req, res)=>{
+    const discussion = req.params.discussionId
+    const userId= req.params.userId
     try{
-
-        const newComment = new Comment (req.body)
+        const getassignment = await Discussion.findById(discussion)
+        const assignmentId = getassignment.assignment
+        const newComment = new Comments (req.body)
+        newComment.Discussion = discussion
+        newComment.byUser = userId
+        newComment.Assignment = assignmentId
         await newComment.save()
 
         res.send(newComment)
@@ -28,8 +36,18 @@ const getComment = async (req, res)=>{
 }
 const updateComment = async (req, res)=>{
     try{
-        const update = await Comments.findById(req.params.commentId)
-        update.comments = req.body.comments
+        const update = await Comments.findByIdAndUpdate(req.params.commentId, req.body)
+        if (req.body.comments){
+        update.comments = req.body.comments}
+        else {
+            update.comments = update.comments 
+        }
+        if (req.body.likes){
+            update.likes = req.body.likess}
+            else {
+                update.likes = update.likes 
+            }
+       
         await update.save()
         res.send(update)
     }
@@ -49,7 +67,7 @@ const deleteComment = async(req, res)=>{
 const increaseLikes = async(req, res)=>{
     try{
         const likeIt = await Comments.findById(req.params.commentId)
-        likeIt.likes+=1;
+        likeIt.likes=likeIt.likes+1;
         await likeIt.save()
         res.send(likeIt)
     }
@@ -57,6 +75,7 @@ const increaseLikes = async(req, res)=>{
         console.error(`error in increaseLikes func ${err}`)
     }
 }
+
 
 module.exports = {
     addComment,
