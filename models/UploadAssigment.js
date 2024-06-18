@@ -1,9 +1,12 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-
-const UploadAssigmentSchema = new mongoose.Schema ({
-  filename: "string",
-  contentTyp: "string",
+const uploadAssignmentSchema = new Schema({
+  filename: String,
+  contentType: String,
   data: Buffer,
-})
-module.exports = mongoose.model("UploadAssigment", UploadAssigmentSchema)
+});
+
+const UploadAssignment = mongoose.model('UploadAssignment', uploadAssignmentSchema);
+
+module.exports = UploadAssignment;
