@@ -14,7 +14,21 @@ const assignmentSchema = new Schema(
     title: String,
     description: String,
 
+
     submission: [submissiontSchema],
+
+    assignfile:{
+      type: Schema.Types.ObjectId,
+    ref: 'assignFile'
+    },
+    discussions:{
+      type: Schema.Types.ObjectId,
+    ref: 'discussion'
+    },
+    course:{
+      type: Schema.Types.ObjectId,
+    ref: 'course'
+    }
   },
   { timestamps: true }
 )
