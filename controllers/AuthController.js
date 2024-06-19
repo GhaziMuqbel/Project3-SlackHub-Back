@@ -1,5 +1,5 @@
-const User = require("../models/User")
-const middleware = require("../middleware")
+const User = require('../models/User')
+const middleware = require('../middleware')
 const axios = require('axios')
 
 const Login = async (req, res) => {
@@ -15,23 +15,23 @@ const Login = async (req, res) => {
       let payload = {
         id: user._id,
         email: user.email,
+        type: user.userType
       }
       let token = middleware.createToken(payload)
       return res.send({ user: payload, token })
     }
 
-    res.status(401).send({ status: "Error", msg: "Unauthorized" })
+    res.status(401).send({ status: 'Error', msg: 'Unauthorized' })
   } catch (error) {
-    res.status(401).send({ status: "Error", msg: "An error has occurred!" })
+    res.status(401).send({ status: 'Error', msg: 'An error has occurred!' })
     throw error
   }
 }
 
 const Register = async (req, res) => {
-  console.log("register function")
+  console.log('register function')
   try {
     const { username, email, password, userType } = req.body
-    
 
     let passwordDigest = await middleware.hashPassword(password)
 
@@ -39,16 +39,16 @@ const Register = async (req, res) => {
     if (existingUser) {
       return res
         .status(400)
-        .send("A user with that email has already been registered!")
+        .send('A user with that email has already been registered!')
     } else {
       const user = new User({
         username,
         email,
         passwordDigest,
-        userType,
+        userType
       })
 
-    await user.save()
+      await user.save()
       res.send(user)
     }
   } catch (error) {
@@ -71,22 +71,23 @@ const UpdatePassword = async (req, res) => {
     if (matched) {
       let passwordDigest = await middleware.hashPassword(newPassword)
       user = await User.findByIdAndUpdate(req.params.user_id, {
-        passwordDigest,
+        passwordDigest
       })
       let payload = {
         id: user.id,
         email: user.email,
+        type: user.userType
       }
-      return res.send({ status: "Password Updated!", user: payload })
+      return res.send({ status: 'Password Updated!', user: payload })
     }
     res
       .status(401)
-      .send({ status: "Error", msg: "Old Password did not match!" })
+      .send({ status: 'Error', msg: 'Old Password did not match!' })
   } catch (error) {
     console.log(error)
     res.status(401).send({
-      status: "Error",
-      msg: "An error has occurred updating password!",
+      status: 'Error',
+      msg: 'An error has occurred updating password!'
     })
   }
 }
@@ -100,5 +101,5 @@ module.exports = {
   Login,
   Register,
   CheckSession,
-  UpdatePassword,
+  UpdatePassword
 }
