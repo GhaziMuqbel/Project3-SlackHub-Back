@@ -3,13 +3,16 @@ const user = require('../models/User')
 const assignment = require('../models/Assignment')
 
 const addCourse = async (req, res) => {
-  //let { name, Description, Instructors } = req.body
+  
   console.log(req.body)
+  const instructorId = req.params.instructorid
 
   try {
     const course = new Course(req.body)
+    course.Instructor = instructorId
     await course.save()
     console.log(course)
+    res.send(course)
   } catch (err) {
     console.error(
       'this is the error in the add course function in the Courses.JS controller file  ' +
@@ -88,12 +91,21 @@ const getAllCourses = async (req, res) => {
     console.error(`error in the getAllCourses ${err}`)
   }
 }
-
+const getCourseDetails = async (req, res)=>{
+  try{
+      const courseDetail = await Course.findById(req.params.courseId)
+      res.send(courseDetail)
+  }
+  catch(err){
+    console.error('error in the getcourseDetail '+err)
+  }
+}
 module.exports = {
   addCourse,
   addStudent,
   delete: deleteCourse,
   addAssignments,
   getAllAssignments,
-  getAllCourses
+  getAllCourses,
+  getCourseDetails
 }
