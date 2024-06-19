@@ -1,6 +1,7 @@
 const Course = require('../models/Course')
 const user = require('../models/User')
 const assignment = require('../models/Assignment')
+const { randAmericanFootballTeam } = require('@ngneat/falso')
 
 const addCourse = async (req, res) => {
   //let { name, Description, Instructors } = req.body
@@ -43,8 +44,8 @@ const addAssignments = async (req, res) => {
 
   try {
     const newAssignment = new assignment(req.body)
-    newAssignment.course= req.params.id
-    const added  = await newAssignment.save()
+    newAssignment.course = req.params.id
+    const added = await newAssignment.save()
     const addIt = await Course.findById(updateIt)
     addIt.Assignments.push(added._id)
     addIt.save()
@@ -66,5 +67,24 @@ const deleteCourse = async (req, res) => {
     console.error('This error is in the Delete in Courses cont' + err)
   }
 }
+const getAll = async (req, res) => {
+  console.log('course Id  ' + req.params.courseId)
 
-module.exports = { addCourse, addStudent, delete: deleteCourse, addAssignments }
+  try {
+    const allAssignments = await Course.findById(req.params.courseId).populate(
+      'Assignments'
+    )
+    console.log(allAssignments)
+    res.send(allAssignments)
+  } catch (err) {
+    console.error(`Error in the getAll fuction ${err}`)
+  }
+}
+
+module.exports = {
+  addCourse,
+  addStudent,
+  delete: deleteCourse,
+  addAssignments,
+  getAll
+}
