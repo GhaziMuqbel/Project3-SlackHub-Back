@@ -13,12 +13,12 @@ const courseSchema = new Schema({
   Students: [
     {
       type: Schema.Types.ObjectID,
-      ref: 'Student'
+      ref: 'User'
     }
   ],
   Instructor: {
     type: Schema.Types.ObjectID,
-    ref: 'Student'
+    ref: 'User'
   },
   Assignments: [
     {
