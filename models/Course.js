@@ -23,7 +23,7 @@ const courseSchema = new Schema({
   Assignments: [
     {
       type: Schema.Types.ObjectID,
-      ref: 'assignmwnt'
+      ref: 'Assignment'
     }
   ]
 })
