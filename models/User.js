@@ -30,9 +30,6 @@ const userSchema = new Schema(
     coursesAdd: {
       type: Schema.Types.ObjectId,
       ref: 'courses'
-    },
-    secret: {
-      type: String
     }
   },
   { timestamps: true }
