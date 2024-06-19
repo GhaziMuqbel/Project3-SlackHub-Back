@@ -1,7 +1,6 @@
 const Course = require('../models/Course')
 const user = require('../models/User')
 const assignment = require('../models/Assignment')
-const { randAmericanFootballTeam } = require('@ngneat/falso')
 
 const addCourse = async (req, res) => {
   //let { name, Description, Instructors } = req.body
@@ -74,8 +73,8 @@ const getAllAssignments = async (req, res) => {
     const allAssignments = await Course.findById(req.params.courseId).populate(
       'Assignments'
     )
-    console.log(allAssignments)
-    res.send(allAssignments)
+    console.log(allAssignments.Assignments)
+    res.send(allAssignments.Assignments)
   } catch (err) {
     console.error(`Error in the getAll fuction ${err}`)
   }
