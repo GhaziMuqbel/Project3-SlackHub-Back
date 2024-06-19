@@ -67,7 +67,7 @@ const deleteCourse = async (req, res) => {
     console.error('This error is in the Delete in Courses cont' + err)
   }
 }
-const getAll = async (req, res) => {
+const getAllAssignments = async (req, res) => {
   console.log('course Id  ' + req.params.courseId)
 
   try {
@@ -80,11 +80,21 @@ const getAll = async (req, res) => {
     console.error(`Error in the getAll fuction ${err}`)
   }
 }
+const getAllCourses = async (req, res) => {
+  try {
+    const allcourses = await Course.find({})
+    console.log(allcourses)
+    res.send(allcourses)
+  } catch (err) {
+    console.error(`error in the getAllCourses ${err}`)
+  }
+}
 
 module.exports = {
   addCourse,
   addStudent,
   delete: deleteCourse,
   addAssignments,
-  getAll
+  getAllAssignments,
+  getAllCourses
 }
