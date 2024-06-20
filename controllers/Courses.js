@@ -1,16 +1,17 @@
 const Course = require('../models/Course')
 const user = require('../models/User')
 const assignment = require('../models/Assignment')
-const { randAmericanFootballTeam } = require('@ngneat/falso')
 
 const addCourse = async (req, res) => {
-  //let { name, Description, Instructors } = req.body
   console.log(req.body)
+  const instructorId = req.params.instructorid
 
   try {
     const course = new Course(req.body)
+    course.Instructor = instructorId
     await course.save()
     console.log(course)
+    res.send(course)
   } catch (err) {
     console.error(
       'this is the error in the add course function in the Courses.JS controller file  ' +
@@ -29,6 +30,7 @@ const addStudent = async (req, res) => {
     const newStudent = await Course.findById(updateIt)
     newStudent.Students.push(StudentID)
     newStudent.save()
+    res.send(newStudent)
   } catch (err) {
     console.error(
       'This is an error in the add Student Function in the Courses contoller' +
@@ -74,8 +76,8 @@ const getAllAssignments = async (req, res) => {
     const allAssignments = await Course.findById(req.params.courseId).populate(
       'Assignments'
     )
-    console.log(allAssignments)
-    res.send(allAssignments)
+    console.log(allAssignments.Assignments)
+    res.send(allAssignments.Assignments)
   } catch (err) {
     console.error(`Error in the getAll fuction ${err}`)
   }
@@ -89,12 +91,22 @@ const getAllCourses = async (req, res) => {
     console.error(`error in the getAllCourses ${err}`)
   }
 }
-
+const getCourseDetails = async (req, res) => {
+  try {
+    const courseDetail = await Course.findById(req.params.courseId).populate(
+      'Students'
+    )
+    res.send(courseDetail)
+  } catch (err) {
+    console.error('error in the getcourseDetail ' + err)
+  }
+}
 module.exports = {
   addCourse,
   addStudent,
   delete: deleteCourse,
   addAssignments,
   getAllAssignments,
-  getAllCourses
+  getAllCourses,
+  getCourseDetails
 }
