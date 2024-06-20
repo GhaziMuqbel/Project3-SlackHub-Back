@@ -3,7 +3,6 @@ const user = require('../models/User')
 const assignment = require('../models/Assignment')
 
 const addCourse = async (req, res) => {
-  
   console.log(req.body)
   const instructorId = req.params.instructorid
 
@@ -31,6 +30,7 @@ const addStudent = async (req, res) => {
     const newStudent = await Course.findById(updateIt)
     newStudent.Students.push(StudentID)
     newStudent.save()
+    res.send(newStudent)
   } catch (err) {
     console.error(
       'This is an error in the add Student Function in the Courses contoller' +
@@ -91,13 +91,14 @@ const getAllCourses = async (req, res) => {
     console.error(`error in the getAllCourses ${err}`)
   }
 }
-const getCourseDetails = async (req, res)=>{
-  try{
-      const courseDetail = await Course.findById(req.params.courseId)
-      res.send(courseDetail)
-  }
-  catch(err){
-    console.error('error in the getcourseDetail '+err)
+const getCourseDetails = async (req, res) => {
+  try {
+    const courseDetail = await Course.findById(req.params.courseId).populate(
+      'Students'
+    )
+    res.send(courseDetail)
+  } catch (err) {
+    console.error('error in the getcourseDetail ' + err)
   }
 }
 module.exports = {
