@@ -1,6 +1,6 @@
 const Assignment = require('../models/Assignment')
 const Courses = require('../models/Course')
-const uploadAssignment = require('../models/UploadAssigment')
+const UploadAssignment = require('../models/UploadAssigment')
 
 const create = async (req, res) => {
   const CourseID = req.params.courseId
@@ -9,7 +9,7 @@ const create = async (req, res) => {
     const assignment = new Assignment(req.body)
     assignment.course = req.params.courseId
     if (req.file) {
-      const assign = new uploadAssignment({
+      const assign = new UploadAssignment({
         filename: req.file.originalname,
         contentType: req.file.mimetype,
         data: req.file.buffer
@@ -18,7 +18,7 @@ const create = async (req, res) => {
       assignment.assignfile = savedAssign._id
     }
     await assignment.save()
-    res.send(assignment)
+    // res.send(assignment)
     const updateCourse = await Courses.findById(CourseID)
     updateCourse.Assignments.push(assignment._id)
     updateCourse.save()
@@ -38,25 +38,25 @@ const deleteAssignment = async (req, res) => {
   }
 }
 
-const upload = async (req, res) => {
-  try {
-    const assignment = await Assignment.findById(req.params.id)
-    if (!assignment) {
-      return res.status(404).send('Assignment not found')
-    }
+// const upload = async (req, res) => {
+//   try {
+//     const assignment = await Assignment.findById(req.params.id)
+//     if (!assignment) {
+//       return res.status(404).send('Assignment not found')
+//     }
 
-    const submission = {
-      studentName: req.body.studentName,
-      code: req.body.code
-    }
+//     const submission = {
+//       studentName: req.body.studentName,
+//       code: req.body.code
+//     }
 
-    assignment.submissions.push(submission)
-    await assignment.save()
-    res.status(201).send(submission)
-  } catch (error) {
-    res.status(400).send(error)
-  }
-}
+//     assignment.submissions.push(submission)
+//     await assignment.save()
+//     res.status(201).send(submission)
+//   } catch (error) {
+//     res.status(400).send(error)
+//   }
+// }
 
 const download = (req, res) => {
   const filePath = path.join(__dirname, '../uploads', req.params.fileName)
@@ -65,7 +65,7 @@ const download = (req, res) => {
 
 module.exports = {
   create,
-  upload,
+
   download,
   delete: deleteAssignment
 }

@@ -17,7 +17,7 @@ const upload = multer({ storage: storage })
 router.post('/:courseId', assignmentsController.create)
 // router.put("/edit/:id", assignmentsController.edit)
 
-router.post('/edit/:id', assignmentsController.upload)
+// router.post('/edit/:id', assignmentsController.upload)
 
 router.delete('/:id', assignmentsController.delete)
 
