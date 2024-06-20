@@ -5,6 +5,7 @@ const assignment = require('../models/Assignment')
 const addCourse = async (req, res) => {
   console.log(req.body)
   const instructorId = req.params.instructorid
+  console.log(req.params.instructorid)
 
   try {
     const course = new Course(req.body)

@@ -62,10 +62,22 @@ const download = (req, res) => {
   const filePath = path.join(__dirname, '../uploads', req.params.fileName)
   res.download(filePath)
 }
+const getAssignmentDetail = async (req, res) => {
+  try {
+    const getIt = await Assignment.findById(req.params.assignId).populate(
+      'discussions'
+    )
+    console.log(getIt)
+    res.send(getIt)
+  } catch (err) {
+    console.error(`error in the get assignment detail ${err}`)
+  }
+}
 
 module.exports = {
   create,
   upload,
   download,
-  delete: deleteAssignment
+  delete: deleteAssignment,
+  getAssignmentDetail
 }
