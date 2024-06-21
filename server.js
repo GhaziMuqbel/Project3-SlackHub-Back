@@ -9,6 +9,9 @@ const authroutes = require('./routes/AuthRouter')
 const userRoutes = require('./routes/User')
 const discussionRoutes = require('./routes/discussion')
 const commentRoutes = require('./routes/comments')
+
+const notesRoutes = require('./routes/Notes') // Import the notes routes
+
 const db = require('./db')
 const app = express()
 
@@ -16,15 +19,18 @@ const PORT = process.env.PORT || 3001
 
 app.use(logger('dev'))
 app.use(express.json())
+app.use(cors())
+
 app.use('/register', register)
 app.use('/login', login)
-app.use(cors())
 app.use('/course', courseRoutes)
 app.use('/assignment', assignmentRoutes)
 app.use('/auth', authroutes)
 app.use('/users', userRoutes)
 app.use('/discussion', discussionRoutes)
 app.use('/comments', commentRoutes)
+app.use('/notes', notesRoutes) // Use the notes routes
+
 app.use('/', (req, res) => {
   res.send('Connected!')
 })
