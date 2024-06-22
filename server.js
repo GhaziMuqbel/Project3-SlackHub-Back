@@ -1,7 +1,8 @@
 const express = require('express')
 const logger = require('morgan')
 const cors = require('cors')
-const { register, login } = require('./controllers/User') // Destructure the imports
+const { register, login } = require('./controllers/User') 
+const path = require('path');
 
 const courseRoutes = require('./routes/courses')
 const assignmentRoutes = require('./routes/Assignments')
@@ -25,8 +26,9 @@ app.use('/auth', authroutes)
 app.use('/users', userRoutes)
 app.use('/discussion', discussionRoutes)
 app.use('/comments', commentRoutes)
+app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 app.use('/', (req, res) => {
-  res.send('Connected!')
+  res.send('Wrong URL!')
 })
 
 app.listen(PORT, () => {

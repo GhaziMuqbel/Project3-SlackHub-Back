@@ -14,7 +14,8 @@ const storage = multer.diskStorage({
 })
 const upload = multer({ storage: storage })
 
-router.post('/:courseId', assignmentsController.create)
+router.post('/new/:courseId',upload.single('file'), assignmentsController.create)
+
 // router.put("/edit/:id", assignmentsController.edit)
 router.get('/getdetails/:assignId', assignmentsController.getAssignmentDetail)
 router.post('/edit/:id', assignmentsController.upload)
