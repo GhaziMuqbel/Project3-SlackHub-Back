@@ -2,9 +2,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const uploadAssignmentSchema = new Schema({
-  filename: String,
-  contentType: String,
-  data: Buffer,
+  pdf: String,
+  
 });
 
 const UploadAssignment = mongoose.model('UploadAssignment', uploadAssignmentSchema);

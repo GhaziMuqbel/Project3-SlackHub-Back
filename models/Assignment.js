@@ -17,7 +17,7 @@ const assignmentSchema = new Schema(
     submission: [submissionSchema],
     assignfile: {
       type: Schema.Types.ObjectId,
-      ref: 'UploadAssignment',
+    ref: 'UploadAssignment'
     },
     discussions: {
       type: Schema.Types.ObjectId,
