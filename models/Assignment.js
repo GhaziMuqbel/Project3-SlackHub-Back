@@ -20,7 +20,7 @@ const assignmentSchema = new Schema(
 
     assignfile:{
       type: Schema.Types.ObjectId,
-    ref: 'assignFile'
+    ref: 'UploadAssignment'
     },
     discussions:{
       type: Schema.Types.ObjectId,
