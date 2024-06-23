@@ -48,32 +48,12 @@ const create = async (req, res) => {
 
 const deleteAssignment = async (req, res) => {
   try {
-    await Assignment.findByIdAndDelete(req.params.id)
-    res.status(200).send({ message: 'Assignment deleted successfully' })
+    await Assignment.findByIdAndDelete(req.params.id);
+    res.status(200).send({ message: 'Assignment deleted successfully' });
   } catch (error) {
-    res.status(400).send(error)
+    res.status(400).send(error);
   }
-}
-
-const upload = async (req, res) => {
-  try {
-    const assignment = await Assignment.findById(req.params.id)
-    if (!assignment) {
-      return res.status(404).send('Assignment not found')
-    }
-
-    const submission = {
-      studentName: req.body.studentName,
-      code: req.body.code
-    }
-
-    assignment.submissions.push(submission)
-    await assignment.save()
-    res.status(201).send(submission)
-  } catch (error) {
-    res.status(400).send(error)
-  }
-}
+};
 
 const download = (req, res) => {
   //const filePath = path.join(__dirname, '../uploads', req.params.fileName)
@@ -89,14 +69,14 @@ const getAssignmentDetail = async (req, res) => {
     console.log(getIt)
     res.send(getIt)
   } catch (err) {
-    console.error(`error in the get assignment detail ${err}`)
+    console.error(`error in the get assignment detail ${err}`);
   }
-}
+};
 
 module.exports = {
   create,
-  upload,
   download,
   delete: deleteAssignment,
   getAssignmentDetail
-}
+};
+
